@@ -1,0 +1,8 @@
+C:\PROYECTOS\Calculadora\Client\bin\Debug\Client.exe.config
+C:\PROYECTOS\Calculadora\Client\bin\Debug\Client.exe
+C:\PROYECTOS\Calculadora\Client\bin\Debug\Client.pdb
+C:\PROYECTOS\Calculadora\Client\obj\Debug\Client.csproj.AssemblyReference.cache
+C:\PROYECTOS\Calculadora\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
+C:\PROYECTOS\Calculadora\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\PROYECTOS\Calculadora\Client\obj\Debug\Client.exe
+C:\PROYECTOS\Calculadora\Client\obj\Debug\Client.pdb
