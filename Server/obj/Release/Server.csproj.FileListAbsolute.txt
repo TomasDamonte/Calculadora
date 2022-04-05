@@ -1,0 +1,11 @@
+C:\PROYECTOS\Calculadora\Server\bin\Release\Server.exe.config
+C:\PROYECTOS\Calculadora\Server\bin\Release\Server.exe
+C:\PROYECTOS\Calculadora\Server\bin\Release\Server.pdb
+C:\PROYECTOS\Calculadora\Server\bin\Release\Z.Expressions.Eval.dll
+C:\PROYECTOS\Calculadora\Server\bin\Release\Z.Expressions.Eval.xml
+C:\PROYECTOS\Calculadora\Server\obj\Release\Server.csproj.AssemblyReference.cache
+C:\PROYECTOS\Calculadora\Server\obj\Release\Server.csproj.SuggestedBindingRedirects.cache
+C:\PROYECTOS\Calculadora\Server\obj\Release\Server.csproj.CoreCompileInputs.cache
+C:\PROYECTOS\Calculadora\Server\obj\Release\Server.csproj.CopyComplete
+C:\PROYECTOS\Calculadora\Server\obj\Release\Server.exe
+C:\PROYECTOS\Calculadora\Server\obj\Release\Server.pdb
