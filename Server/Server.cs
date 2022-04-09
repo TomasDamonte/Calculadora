@@ -47,7 +47,7 @@ namespace Server
                     // An incoming connection needs to be processed.                    
                     byte[] bytes = new byte[99999];
                     int bytesRec = handler.Receive(bytes);
-                    string data = Encoding.UTF8.GetString(bytes,0,bytesRec).Replace("<EOF>", "");
+                    string data = Encoding.UTF8.GetString(bytes,0,bytesRec);
                     // Show the data on the console.
                     Console.WriteLine($"Text received : {data}");
 

@@ -44,7 +44,7 @@ namespace Client
                     sender.Connect(remoteEP);
                     // Encode the data string into a byte array.
                     // Send the data through the socket.
-                    sender.Send(Encoding.UTF8.GetBytes($"{calculo}<EOF>"));
+                    sender.Send(Encoding.UTF8.GetBytes(calculo));
                     // Receive the response from the remote device.
                     int bytesRec = sender.Receive(bytes);
                     Console.WriteLine($"Respuesta: {Encoding.UTF8.GetString(bytes,0,bytesRec)}");
