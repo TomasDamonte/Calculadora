@@ -33,8 +33,7 @@ namespace Client
                 //IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName())
                 //IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
                 //IPAddress ipAddress = ipHostInfo.AddressList[4];
-                IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
+                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
 
                 // Create a TCP/IP  socket.
                 Socket sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -43,20 +42,13 @@ namespace Client
                 try
                 {
                     sender.Connect(remoteEP);
-
-                    //Console.WriteLine($"Socket connected to {sender.RemoteEndPoint}");
-
                     // Encode the data string into a byte array.
-                    byte[] msg = Encoding.UTF8.GetBytes($"{calculo}<EOF>");
-
                     // Send the data through the socket.
-                    int bytesSent = sender.Send(msg);
-
+                    sender.Send(Encoding.UTF8.GetBytes($"{calculo}<EOF>"));
                     // Receive the response from the remote device.
                     int bytesRec = sender.Receive(bytes);
-                    Console.WriteLine($"Respuesta: {Encoding.UTF8.GetString(bytes, 0, bytesRec)}");
+                    Console.WriteLine($"Respuesta: {Encoding.UTF8.GetString(bytes,0,bytesRec)}");
                     Console.WriteLine();
-
                     // Release the socket.
                     sender.Shutdown(SocketShutdown.Both);
                     sender.Close();

@@ -12,8 +12,6 @@ namespace Server
 {
     internal class Server
     {
-        // Incoming data from the client.
-        public static string data = null;
         static void Main(string[] args)
         {
             StartListening();
@@ -21,19 +19,16 @@ namespace Server
 
         public static void StartListening()
         {
-            // Data buffer for incoming data.
-            byte[] bytes = new Byte[1024];
 
             // Establish the local endpoint for the socket.
             // Dns.GetHostName returns the name of the 
             // host running the application.
             //IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             //IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
+            IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
 
             // Create a TCP/IP socket.
-            Socket listener = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.Tcp);
+            Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             // Bind the socket to the local endpoint and 
             // listen for incoming connections.
@@ -48,20 +43,11 @@ namespace Server
                     Console.WriteLine("Waiting for a connection...");
                     // Program is suspended while waiting for an incoming connection.
                     Socket handler = listener.Accept();
-                    data = null;
 
-                    // An incoming connection needs to be processed.
-                    while (true)
-                    {
-                        bytes = new byte[1024];
-                        int bytesRec = handler.Receive(bytes);
-                        data += Encoding.UTF8.GetString(bytes, 0, bytesRec);
-                        if (data.IndexOf("<EOF>") > -1)
-                        {
-                            break;
-                        }
-                    }
-                    data = data.Replace("<EOF>", "");
+                    // An incoming connection needs to be processed.                    
+                    byte[] bytes = new byte[99999];
+                    int bytesRec = handler.Receive(bytes);
+                    string data = Encoding.UTF8.GetString(bytes,0,bytesRec).Replace("<EOF>", "");
                     // Show the data on the console.
                     Console.WriteLine($"Text received : {data}");
 
@@ -71,17 +57,16 @@ namespace Server
                     {
                         result = Evaluar(data);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         error = ex.ToString();
                     }
 
-                    string resp = string.IsNullOrEmpty(error) ? result.ToString() : error;       
+                    string resp = string.IsNullOrEmpty(error) ? result.ToString() : error;
 
                     // Echo the data back to the client.
-                    byte[] msg = Encoding.UTF8.GetBytes(resp);
-
-                    handler.Send(msg);
+                    handler.Send(Encoding.UTF8.GetBytes(resp));
+                    // Release the socket.
                     handler.Shutdown(SocketShutdown.Both);
                     handler.Close();
                 }
@@ -105,5 +90,5 @@ namespace Server
             return context.Execute<decimal>(expression);
         }
 
-    }    
+    }
 }
