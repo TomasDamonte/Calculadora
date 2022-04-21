@@ -43,34 +43,8 @@ namespace Server
                     Console.WriteLine("Waiting for a connection...");
                     // Program is suspended while waiting for an incoming connection.
                     Socket handler = listener.Accept();
-
-                    // An incoming connection needs to be processed.                    
-                    byte[] bytes = new byte[99999];
-                    int bytesRec = handler.Receive(bytes);
-                    string data = Encoding.UTF8.GetString(bytes,0,bytesRec);
-                    // Show the data on the console.
-                    Console.WriteLine($"Text received : {data}");
-
-                    decimal result = 0;
-                    string error = "";
-                    try
-                    {
-                        result = Evaluar(data);
-                    }
-                    catch (Exception ex)
-                    {
-                        error = ex.ToString();
-                    }
-
-                    string resp = string.IsNullOrEmpty(error) ? result.ToString() : error;
-
-                    // Echo the data back to the client.
-                    handler.Send(Encoding.UTF8.GetBytes(resp));
-                    // Release the socket.
-                    handler.Shutdown(SocketShutdown.Both);
-                    handler.Close();
+                    Task.Run(() => Procesar(handler));
                 }
-
             }
             catch (Exception e)
             {
@@ -78,6 +52,34 @@ namespace Server
             }
             Console.WriteLine("\nPress ENTER to continue...");
             Console.Read();
+        }
+
+        static void Procesar(Socket handler)
+        {
+            byte[] bytes = new byte[99999];
+            int bytesRec = handler.Receive(bytes);
+            string data = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+            // Show the data on the console.
+            Console.WriteLine($"Text received : {data}");
+
+            decimal result = 0;
+            string error = "";
+            try
+            {
+                result = Evaluar(data);
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+            }
+
+            string resp = string.IsNullOrEmpty(error) ? result.ToString() : error;
+
+            // Echo the data back to the client.
+            handler.Send(Encoding.UTF8.GetBytes(resp));
+            // Release the socket.
+            handler.Shutdown(SocketShutdown.Both);
+            handler.Close();
         }
 
         static decimal Evaluar(string expression)
